@@ -1,0 +1,55 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      .gifLoader {
+        width: 150px;
+        height: 50px;
+        border-radius: 5px;
+        background-color: blue;
+        color: white;
+      }
+
+      #gif {
+        grid-row: 0/1;
+      }
+      #searchBar {
+        width: 500px;
+        height: 40px;
+        margin-top: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <img id="gif" src="#" /><br />
+    <input
+      type="text"
+      id="searchBar"
+      placeholder="Enter the gif you had like to search"
+    />
+    <button class="gifLoader">Load</button>
+
+    <script>
+      const img = document.querySelector("img");
+      const btn = document.querySelector(".gifLoader");
+      const apiAddress =
+        "https://api.giphy.com/v1/gifs/translate?api_key=dMlGUDaaU9dQWdk69GT8iyED59ABshCu&s=";
+
+      btn.addEventListener("click", () => {
+        const searchValue = document.querySelector("#searchBar").value;
+        let searchApiAddress = apiAddress + searchValue;
+
+        console.log(searchApiAddress);
+        fetch(searchApiAddress, { mode: "cors" })
+          .then((response) => {
+            return response.json();
+          })
+          .then((response) => {
+            img.src = response.data.images.original.url;
+          })
+          .catch((error) => console.log(error));
+      });
+    </script>
+  </body>
+</html>
